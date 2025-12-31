@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | URLSHORT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #020617;
+      color: #fff;
+    }
+    header {
+      padding: 20px;
+      background: #020617;
+      border-bottom: 1px solid #1e293b;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    button {
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      background: #38bdf8;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0ea5e9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #020617;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #1e293b;
+      text-align: left;
+      font-size: 14px;
+    }
+    th {
+      color: #38bdf8;
+    }
+    tr:hover {
+      background: #020617;
+    }
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+    .empty {
+      text-align: center;
+      margin-top: 20px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+<header>URLSHORT Dashboard</header>
+
+<div class="container">
+  <form method="POST" action="/url">
+    <input type="url" name="url" placeholder="https://example.com" required />
+    <button type="submit">Shorten</button>
+  </form>
+
+  <% if (urls && urls.length > 0) { %>
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Short URL</th>
+        <th>Original URL</th>
+        <th>Clicks</th>
+      </tr>
+      <% urls.forEach((u, i) => { %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td>
+            <a href="/<%= u.shortid %>" target="_blank">
+              <%= u.shortid %>
+            </a>
+          </td>
+          <td><%= u.redirectURL %></td>
+          <td><%= u.visitHistory.length %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } else { %>
+    <div class="empty">No URLs created yet.</div>
+  <% } %>
+</div>
+
+</body>
+</html>
