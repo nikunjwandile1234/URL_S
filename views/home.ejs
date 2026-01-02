@@ -5,7 +5,6 @@
   <title>Dashboard | URLSHORT</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -14,10 +13,18 @@
     }
     header {
       padding: 20px;
-      background: #020617;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid #1e293b;
-      text-align: center;
-      font-size: 22px;
+    }
+    .logout {
+      background: #ef4444;
+      color: #000;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
       font-weight: bold;
     }
     .container {
@@ -35,7 +42,6 @@
       padding: 12px;
       border-radius: 8px;
       border: none;
-      outline: none;
     }
     button {
       padding: 12px 18px;
@@ -45,42 +51,29 @@
       background: #38bdf8;
       cursor: pointer;
     }
-    button:hover {
-      background: #0ea5e9;
-    }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #020617;
-      border-radius: 10px;
-      overflow: hidden;
     }
     th, td {
       padding: 12px;
       border-bottom: 1px solid #1e293b;
-      text-align: left;
-      font-size: 14px;
-    }
-    th {
-      color: #38bdf8;
-    }
-    tr:hover {
-      background: #020617;
     }
     a {
       color: #38bdf8;
       text-decoration: none;
     }
-    .empty {
-      text-align: center;
-      margin-top: 20px;
-      color: #94a3b8;
-    }
   </style>
 </head>
 <body>
 
-<header>URLSHORT Dashboard</header>
+<header>
+  <div>URLSHORT Dashboard</div>
+  <!-- LOGOUT BUTTON -->
+  <form method="GET" action="/user/logout">
+    <button class="logout">Logout</button>
+  </form>
+</header>
 
 <div class="container">
   <form method="POST" action="/url">
@@ -99,18 +92,14 @@
       <% urls.forEach((u, i) => { %>
         <tr>
           <td><%= i + 1 %></td>
-          <td>
-            <a href="/<%= u.shortid %>" target="_blank">
-              <%= u.shortid %>
-            </a>
-          </td>
+          <td><a href="/<%= u.shortid %>" target="_blank"><%= u.shortid %></a></td>
           <td><%= u.redirectURL %></td>
           <td><%= u.visitHistory.length %></td>
         </tr>
       <% }) %>
     </table>
   <% } else { %>
-    <div class="empty">No URLs created yet.</div>
+    <p>No URLs created yet.</p>
   <% } %>
 </div>
 
